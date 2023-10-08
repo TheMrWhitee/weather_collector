@@ -4,17 +4,6 @@ import config
 from project.db import get_db, transaction
 from project.domain.models import City
 
-cities = (
-    'Chongqing', 'Shanghai', 'Beijing', 'Chengdu', 'Delhi', 'Guangzhou',
-    'Mumbai', 'Shenzhen', 'Kinshasa', 'Istanbul', 'Karachi', 'Tokyo',
-    'Tianjin', 'Zhengzhou', 'São Paulo', 'Tehran', 'Moscow', 'Hangzhou',
-    'Lahore', 'Shijiazhuang', 'Suzhou', 'Jakarta', 'Dongguan', 'Qingdao',
-    'Changsha', 'Cairo', 'Harbin', 'Seoul', 'Ningbo', 'Hefei', 'Nanjing',
-    'Mexico City', 'Jinan', 'Ho Chi Minh City', 'London', 'New York', 'Xi’an',
-    'Kunming', 'Chittagong', 'Bengaluru', 'Shenyang', 'Bangkok', 'Hanoi',
-    'Lagos', 'Riyadh', 'Changchun', 'Lima', 'Hong Kong', 'Bogotá', 'Baghdad'
-)
-
 
 def get_coordinates_and_population_of_city(city_name: str):
     url = f'{config.GEONAMES_URL}&name={city_name}'
@@ -37,6 +26,3 @@ def insert_cities(city_names: tuple):
 
     with transaction(db):
         db.add_all(cities_to_insert)
-
-
-insert_cities(cities)

@@ -23,7 +23,7 @@ class WeatherCollector:
         for city in cities:
             yield city
 
-    def run(self, amount):
+    def collect_statistics(self, amount):
         db = next(get_db())
         weather_in_cities = []
 
