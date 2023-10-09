@@ -1,6 +1,10 @@
 import click
 
+import config
+from project.db import get_db
+from project.domain.collector.collector import WeatherCollector
 from project.domain.collector.helper import insert_cities
+from project.domain.models import City
 
 
 @click.group()
@@ -22,8 +26,22 @@ def insert_city():
         'Baghdad'
     )
 
+    db = next(get_db())
+
+    count = db.query(City).count()
+    if count:
+        print('The database already contains {} cities'.format(count))
+        return
+
     insert_cities(cities)
 
 
-if __name__ == "__main__":
+@cli.command()
+@click.option('-n', '--number', type=int, default=50)
+def collect(number):
+    collector = WeatherCollector(config.OPENWEATHER_API_KEY)
+    collector.collect_statistics(number)
+
+
+if __name__ == '__main__':
     cli()
